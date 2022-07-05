@@ -2,6 +2,7 @@ import 'package:destini/story.dart';
 
 class StoryBrain {
   int _storyNumber = 0;
+
   final List<Story> _storyData = [
     Story(
         storyTitle:
@@ -40,11 +41,13 @@ class StoryBrain {
     _storyNumber = value;
   }
 
-  String getStory(int number) => _storyData[number].storyTitle;
+  String getStory() {
+    return _storyData[storyNumber].storyTitle;
+  }
 
-  String getChoice1(int number) => _storyData[number].choice1;
+  String getChoice1() => _storyData[storyNumber].choice1;
 
-  String getChoice2(int number) => _storyData[number].choice2;
+  String getChoice2() => _storyData[storyNumber].choice2;
 
   List<Story> get storyData => _storyData;
 
@@ -52,25 +55,25 @@ class StoryBrain {
     _storyNumber = 0;
   }
 
-  void nextStory(num) {
-    if (num > 2 || num <= 0) return;
-    if (storyNumber == 0) {
-      storyNumber = num == 1 ? 2 : 1;
-    }
-
-    if (storyNumber == 1) {
-      storyNumber = num == 1 ? 2 : 3;
-    }
-
-    if (storyNumber == 2) {
-      storyNumber = num == 1 ? 5 : 4;
-    }
-
-    if (storyNumber > 2 && storyNumber < 6) {
+  void nextStory(int num) {
+    if (num == 1 && _storyNumber == 0) {
+      _storyNumber = 2;
+    } else if (num == 2 && _storyNumber == 0) {
+      _storyNumber = 1;
+    } else if (num == 1 && _storyNumber == 1) {
+      _storyNumber = 2;
+    } else if (num == 2 && _storyNumber == 1) {
+      _storyNumber = 3;
+    } else if (num == 1 && _storyNumber == 2) {
+      _storyNumber = 5;
+    } else if (num == 2 && _storyNumber == 2) {
+      _storyNumber = 4;
+    } else if (_storyNumber == 3 || _storyNumber == 4 || _storyNumber == 5) {
       restart();
     }
   }
 
-  bool buttonShouldBeVisible() =>
-      storyNumber < 0 || storyNumber > 2 ? false : true;
+  bool buttonShouldBeVisible() {
+    return _storyNumber > 2 ? false : true;
+  }
 }
