@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quizzler/Question.dart';
 
 void main() => runApp(Quizzler());
 
@@ -36,17 +37,19 @@ class _QuizPageState extends State<QuizPage> {
     color: Colors.red,
   );
   List<Icon> scoreKepper = [];
-  final List<String> questions = [
-    'You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-    'question3: A slug\'s blood is green.'
+
+  List<Question> questions = [
+    Question('You can lead a cow down stairs but not up stairs.', false),
+    Question('Approximately one quarter of human bones are in the feet.', true),
+    Question('question3: A slug\'s blood is green.', true)
   ];
-  List<bool> answers = [false, true, true];
 
   int currentQuestion = 0;
 
-  void addIcon(bool answer) => setState(() => scoreKepper
-      .add(answers[currentQuestion] != answer ? wrongAnswer : correctAnswer));
+  void addIcon(bool answer) =>
+      setState(() => scoreKepper.add(questions[currentQuestion].answer != answer
+          ? wrongAnswer
+          : correctAnswer));
 
   void nextQuestion(bool answer) {
     addIcon(answer);
@@ -73,7 +76,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[currentQuestion],
+                questions[currentQuestion].question,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25.0,
