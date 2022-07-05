@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzler/Question.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(Quizzler());
 
@@ -46,6 +47,15 @@ class _QuizPageState extends State<QuizPage> {
 
   int currentQuestion = 0;
 
+  bool finished = false;
+
+  bool isFinished(bool finished) => this.finished = finished;
+
+  void reset() {
+    currentQuestion = 0;
+    finished = isFinished(false);
+  }
+
   void addIcon(bool answer) =>
       setState(() => scoreKepper.add(questions[currentQuestion].answer != answer
           ? wrongAnswer
@@ -55,11 +65,16 @@ class _QuizPageState extends State<QuizPage> {
     addIcon(answer);
     setState(() {
       if (currentQuestion >= questions.length - 1) {
-        currentQuestion = 0;
+        finished = isFinished(true);
+        reset();
+        scoreKepper = [];
+        Alert(
+          context: context,
+          title: "The end of the Quiz",
+          desc: "Good job hit the button if you want to play again.",
+        ).show();
       } else {
         currentQuestion++;
-        print(currentQuestion);
-        print(questions.length);
       }
     });
   }
