@@ -6,6 +6,7 @@ import 'gender_card.dart';
 
 const Color containerColor = Color(0xFF1D1E33);
 const Color footerColor = Color(0xFFEB1555);
+const Color inactiveCardColor = Color(0xFF111328);
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -29,6 +30,7 @@ class _InputPageState extends State<InputPage> {
               AppCard(
                 key: UniqueKey(),
                 color: containerColor,
+                inactiveCardColor: inactiveCardColor,
                 child: GenderCard(
                     key: UniqueKey(),
                     icon: const Icon(
@@ -38,6 +40,7 @@ class _InputPageState extends State<InputPage> {
                     text: "Male"),
               ),
               AppCard(
+                inactiveCardColor: inactiveCardColor,
                 key: UniqueKey(),
                 color: containerColor,
                 child: GenderCard(
@@ -58,6 +61,7 @@ class _InputPageState extends State<InputPage> {
                 key: UniqueKey(),
                 color: containerColor,
                 child: null,
+                inactiveCardColor: inactiveCardColor,
               )
             ],
           )),
@@ -68,11 +72,13 @@ class _InputPageState extends State<InputPage> {
                 key: UniqueKey(),
                 color: containerColor,
                 child: null,
+                inactiveCardColor: inactiveCardColor,
               ),
               AppCard(
                 key: UniqueKey(),
                 color: containerColor,
                 child: null,
+                inactiveCardColor: inactiveCardColor,
               )
             ],
           )),
