@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/gender_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -37,7 +38,7 @@ class _InputPageState extends State<InputPage> {
                       FontAwesomeIcons.mars,
                       size: 80,
                     ),
-                    text: "Male"),
+                    text: GenderType.MALE.name),
               ),
               AppCard(
                 inactiveCardColor: inactiveCardColor,
@@ -45,7 +46,7 @@ class _InputPageState extends State<InputPage> {
                 color: containerColor,
                 child: GenderCard(
                   key: UniqueKey(),
-                  text: "female",
+                  text: GenderType.FEMALE.name,
                   icon: const Icon(
                     FontAwesomeIcons.venus,
                     size: 80,
