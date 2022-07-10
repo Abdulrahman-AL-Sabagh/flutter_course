@@ -1,13 +1,12 @@
 import 'package:bmi_calculator/gender_enum.dart';
+import 'package:bmi_calculator/results_page.dart';
+import 'package:bmi_calculator/value_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import "app_card.dart";
+import 'constants.dart';
 import 'gender_card.dart';
-
-const Color containerColor = Color(0xFF1D1E33);
-const Color footerColor = Color(0xFFEB1555);
-const Color inactiveCardColor = Color(0xFF111328);
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -17,6 +16,9 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  int height = 180;
+  int weight = 60;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +26,7 @@ class _InputPageState extends State<InputPage> {
         title: const Text("BMI CALCULATOR"),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
               child: Row(
@@ -61,8 +64,45 @@ class _InputPageState extends State<InputPage> {
               AppCard(
                 key: UniqueKey(),
                 color: containerColor,
-                child: null,
                 inactiveCardColor: inactiveCardColor,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      "Height",
+                      style: labelTextStyle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: <Widget>[
+                        Text("$height", style: numberTextStyle),
+                        const Text(
+                          "cm",
+                          style: labelTextStyle,
+                        )
+                      ],
+                    ),
+                    SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                          inactiveTrackColor: const Color(0xFF8D8E98),
+                          thumbColor: const Color(0xFFEB1555),
+                          overlayColor: const Color(0x29EB1555),
+                          activeTrackColor: Colors.white,
+                          thumbShape: const RoundSliderThumbShape(
+                              enabledThumbRadius: 15),
+                          overlayShape:
+                              const RoundSliderOverlayShape(overlayRadius: 30)),
+                      child: Slider(
+                          value: height.toDouble(),
+                          min: 120,
+                          max: 220,
+                          onChanged: (double newValue) =>
+                              setState(() => height = newValue.round())),
+                    ),
+                  ],
+                ),
               )
             ],
           )),
@@ -72,22 +112,37 @@ class _InputPageState extends State<InputPage> {
               AppCard(
                 key: UniqueKey(),
                 color: containerColor,
-                child: null,
                 inactiveCardColor: inactiveCardColor,
+                child: ValueCard("weight", 60, key: UniqueKey()),
               ),
               AppCard(
                 key: UniqueKey(),
                 color: containerColor,
-                child: null,
                 inactiveCardColor: inactiveCardColor,
+                child: ValueCard(
+                  "Age",
+                  18,
+                  key: UniqueKey(),
+                ),
               )
             ],
           )),
-          Container(
-            color: footerColor,
-            margin: const EdgeInsets.only(top: 10),
-            width: double.infinity,
-            height: 80,
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ResultsPage(),
+              ),
+            ),
+            child: Container(
+              color: footerColor,
+              margin: const EdgeInsets.only(top: 10),
+              width: double.infinity,
+              height: 80,
+              child: const Center(
+                child: Text("CALCULATE"),
+              ),
+            ),
           ),
         ],
       ),
